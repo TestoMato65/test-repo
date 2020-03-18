@@ -1,7 +1,10 @@
 // This is free and unencumbered software released into the public domain.
 // See LICENSE for details
 
-const {app, BrowserWindow, Menu, protocol, ipcMain} = require('electron');
+const {app, BrowserWindow, Menu} = require('electron');
+
+const { ipcMain } = require('electron-better-ipc');
+
 const log = require('electron-log');
 const {autoUpdater} = require("electron-updater");
 
@@ -71,13 +74,18 @@ autoUpdater.on('checking-for-update', () => {
 // })
 
 autoUpdater.on('update-available', (info) => {
-  const isConfirmed = confirm()
 
-  if (isConfirmed) {
-    autoUpdater.downloadUpdate()
-  } else {
-    alert("Updates won't be downloaded")
-  }
+  console.log("main: update available")
+
+  (async () => {
+    const isConfirmed = await ipcMain.callFocusedRenderer('confirmation');
+
+    if (isConfirmed) {
+      autoUpdater.downloadUpdate()
+    } else {
+      alert("Updates won't be downloaded")
+    }
+  })();
 })
 
 autoUpdater.on('update-not-available', (info) => {
@@ -100,13 +108,18 @@ autoUpdater.on('download-progress', (progressObj) => {
 // })
 
 autoUpdater.on('update-downloaded', (info) => {
-  const isConfirmed = confirm()
 
-  if (isConfirmed) {
-    autoUpdater.quitAndInstall();  
-  } else {
-    alert("Updates won't be installed")
-  }
+  console.log("main: update downloaded")
+
+  (async () => {
+    const isConfirmed = await ipcMain.callFocusedRenderer('confirmation');
+
+    if (isConfirmed) {
+      autoUpdater.quitAndInstall();  
+    } else {
+      alert("Updates won't be installed")
+    }
+  })();
 })
 
 app.on('ready', function() {

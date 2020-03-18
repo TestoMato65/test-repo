@@ -1,6 +1,6 @@
 {
   "name": "test-repo",
-  "version": "0.7.3",
+  "version": "0.7.7",
   "main": "main.js",
   "description": "electron-updater example project",
   "author": "TestoMato65",
@@ -13,6 +13,7 @@
     "electron-builder": "^20.28.4"
   },
   "dependencies": {
+    "electron-better-ipc": "^0.8.0",
     "electron-log": "^1.3.0",
     "electron-updater": "^4.0.6"
   },
