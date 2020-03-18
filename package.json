@@ -1,9 +1,9 @@
 {
-  "name": "electron-updater-example",
+  "name": "test-repo",
   "version": "0.7.1",
   "main": "main.js",
   "description": "electron-updater example project",
-  "author": "Matt Haggard",
+  "author": "TestoMato65",
   "scripts": {
     "publish": "build --win -p always",
     "dev": "electron ."
@@ -17,7 +17,7 @@
     "electron-updater": "^4.0.6"
   },
   "build": {
-    "appId": "com.github.iffy.electronupdaterexample",
+    "appId": "com.github.testomato65.test-repo",
     "mac": {
       "category": "your.app.category.type",
       "target": [
