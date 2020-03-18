@@ -22,9 +22,6 @@ ipcRenderer.on('message', function(event, text) {
 })
 
 ipcRenderer.answerMain('confirmation', async () => {
-
-  console.log("window: confirmation")
-
 	const isConfirmed = window.confirm();
 	return isConfirmed;
 });

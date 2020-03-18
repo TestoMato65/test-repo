@@ -74,18 +74,16 @@ autoUpdater.on('checking-for-update', () => {
 // })
 
 autoUpdater.on('update-available', (info) => {
-
-  console.log("main: update available")
-
-  (async () => {
-    const isConfirmed = await ipcMain.callFocusedRenderer('confirmation');
-
-    if (isConfirmed) {
-      autoUpdater.downloadUpdate()
-    } else {
-      alert("Updates won't be downloaded")
-    }
-  })();
+  setTimeout(() => {
+    (async () => {
+      const isConfirmed = await ipcMain.callFocusedRenderer('confirmation');
+      if (isConfirmed) {
+        autoUpdater.downloadUpdate()
+      } else {
+        sendStatusToWindow("Updates won't be downloaded")
+      }
+    })();
+  }, 2000);
 })
 
 autoUpdater.on('update-not-available', (info) => {
@@ -109,17 +107,18 @@ autoUpdater.on('download-progress', (progressObj) => {
 
 autoUpdater.on('update-downloaded', (info) => {
 
-  console.log("main: update downloaded")
+  setTimeout(() => {
+    (async () => {
+      const isConfirmed = await ipcMain.callFocusedRenderer('confirmation');
+      if (isConfirmed) {
+        autoUpdater.quitAndInstall();  
+      } else {
+        sendStatusToWindow("Updates won't be installed")
+      }
+    })();
+  }, 2000);
 
-  (async () => {
-    const isConfirmed = await ipcMain.callFocusedRenderer('confirmation');
-
-    if (isConfirmed) {
-      autoUpdater.quitAndInstall();  
-    } else {
-      alert("Updates won't be installed")
-    }
-  })();
+  
 })
 
 app.on('ready', function() {
